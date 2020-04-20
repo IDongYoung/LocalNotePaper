@@ -101,7 +101,11 @@ public class MySqlite extends SQLiteOpenHelper {
         Cursor c = this.getWritableDatabase().rawQuery(sql,null);
         List<ShowData> result = new ArrayList<>();
         while (c.moveToNext()){
-            result.add(new ShowData(c.getInt(0),getWeek(c.getInt(4)),getDay(c.getInt(1),c.getInt(2),c.getInt(3)),c.getString(5)));
+            ShowData showData = new ShowData(c.getInt(0),getWeek(c.getInt(4)),getDay(c.getInt(1),c.getInt(2),c.getInt(3)),c.getString(5));
+            showData.setYear(c.getInt(1));
+            showData.setMonth(c.getInt(2));
+            showData.setDay(c.getInt(3));
+            result.add(showData);
         }
         c.close();
         return result;

@@ -2,14 +2,17 @@ package com.example.local.note.paper;
 
 public class ShowData {
     private int id;
+    private int year;
+    private int month;
+    private int day;
     private String week;
-    private String day;
+    private String calendar;
     private String myText;
     private String htmlMyText;
-    public ShowData(int id,String week,String day,String myText){
+    public ShowData(int id,String week,String calendar,String myText){
         this.id = id;
         this.week = week;
-        this.day = day;
+        this.calendar = calendar;
         this.myText = myText;
         this.htmlMyText = myText.replaceAll("(\r\n|\n)","<br/>");
     }
@@ -30,12 +33,36 @@ public class ShowData {
         this.week = week;
     }
 
-    public String getDay() {
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getDay() {
         return day;
     }
 
-    public void setDay(String day) {
+    public void setDay(int day) {
         this.day = day;
+    }
+
+    public String getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(String calendar) {
+        this.calendar = calendar;
     }
 
     public String getMyText() {

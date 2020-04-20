@@ -2,6 +2,7 @@ package com.example.local.note.paper;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MyAdapter extends BaseAdapter {
@@ -49,10 +52,11 @@ public class MyAdapter extends BaseAdapter {
             viewHolder.myText = convertView.findViewById(R.id.myText);
             convertView.setTag(viewHolder);
         }else {
+            convertView.setBackgroundColor(Color.WHITE);
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.week.setText(Html.fromHtml(data.get(position).getWeek()));
-        viewHolder.day.setText(data.get(position).getDay());
+        viewHolder.day.setText(data.get(position).getCalendar());
         viewHolder.myText.setText(Html.fromHtml(data.get(position).getHtmlMyText()));
         viewHolder.myText.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -63,7 +67,22 @@ public class MyAdapter extends BaseAdapter {
                 return true;
             }
         });
+        if (isToday(data.get(position).getYear(),data.get(position).getMonth(),data.get(position).getDay())){
+            convertView.setBackgroundColor(0xFFFAF0E6);
+        }
         return convertView;
+    }
+
+    private boolean isToday(int year , int month , int day){
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(new Date(System.currentTimeMillis()));
+        if (ca.get(Calendar.YEAR) != year){
+            return false;
+        }
+        if (ca.get(Calendar.MONTH)+1 != month){
+            return false;
+        }
+        return ca.get(Calendar.DATE) == day;
     }
 
     static class ViewHolder{
