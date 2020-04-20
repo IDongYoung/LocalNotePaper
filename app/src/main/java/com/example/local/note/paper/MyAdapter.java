@@ -2,11 +2,11 @@ package com.example.local.note.paper;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -47,20 +47,20 @@ public class MyAdapter extends BaseAdapter {
             viewHolder.week = convertView.findViewById(R.id.week);
             viewHolder.day = convertView.findViewById(R.id.day);
             viewHolder.myText = convertView.findViewById(R.id.myText);
-            viewHolder.edit = convertView.findViewById(R.id.myEdit);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.week.setText(data.get(position).getWeek());
+        viewHolder.week.setText(Html.fromHtml(data.get(position).getWeek()));
         viewHolder.day.setText(data.get(position).getDay());
-        viewHolder.myText.setText(data.get(position).getMyText());
-        viewHolder.edit.setOnClickListener(new View.OnClickListener() {
+        viewHolder.myText.setText(Html.fromHtml(data.get(position).getHtmlMyText()));
+        viewHolder.myText.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 Intent intent = new Intent(context, EditActivity.class);
                 intent.putExtra("id", data.get(position).getId());
                 context.startActivity(intent);
+                return true;
             }
         });
         return convertView;
@@ -70,6 +70,5 @@ public class MyAdapter extends BaseAdapter {
         TextView week;
         TextView day;
         TextView myText;
-        ImageView edit;
     }
 }

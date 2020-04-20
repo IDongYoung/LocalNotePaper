@@ -5,11 +5,13 @@ public class ShowData {
     private String week;
     private String day;
     private String myText;
+    private String htmlMyText;
     public ShowData(int id,String week,String day,String myText){
         this.id = id;
         this.week = week;
         this.day = day;
         this.myText = myText;
+        this.htmlMyText = myText.replaceAll("(\r\n|\n)","<br/>");
     }
 
     public int getId() {
@@ -42,5 +44,13 @@ public class ShowData {
 
     public void setMyText(String myText) {
         this.myText = myText;
+    }
+
+    public String getHtmlMyText() {
+        return htmlMyText;
+    }
+
+    public void setHtmlMyText(String htmlMyText) {
+        this.htmlMyText = htmlMyText;
     }
 }

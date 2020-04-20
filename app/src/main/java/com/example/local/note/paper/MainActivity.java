@@ -6,9 +6,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -41,15 +42,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ImageView imageView = findViewById(R.id.search);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        EditText editText = findViewById(R.id.editSearchKey);
+        editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                EditText editText = findViewById(R.id.editSearchKey);
-                String key = editText.getText().toString();
-                data = mysql.getShowDataBySearch(key);
-                myAdapter.setData(data);
-                myAdapter.notifyDataSetChanged();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String show = s.toString();
+                if ("".equals(show)){
+                    data = mysql.getShowDataByTime(year,month);
+                    myAdapter.setData(data);
+                    myAdapter.notifyDataSetChanged();
+                }else {
+                    data = mysql.getShowDataBySearch(show);
+                    myAdapter.setData(data);
+                    myAdapter.notifyDataSetChanged();
+                }
             }
         });
     }

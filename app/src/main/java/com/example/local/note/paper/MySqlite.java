@@ -76,7 +76,11 @@ public class MySqlite extends SQLiteOpenHelper {
 
     public List<ShowData> getShowDataBySearch(String key){
         String sql = "select * from notepaper where note like '%"+key+"%'; ";
-        return getShowDataSql(sql);
+        List<ShowData> showDataList = getShowDataSql(sql);
+        for (ShowData showData : showDataList){
+            showData.setHtmlMyText(showData.getHtmlMyText().replaceAll(key,"<font color=\"#ff0000\"><strong>"+key+"</strong></font>"));
+        }
+        return showDataList;
     }
     public ShowData getShowDataById(int id){
         String sql = "select * from notepaper where id = "+id+";";
@@ -117,8 +121,8 @@ public class MySqlite extends SQLiteOpenHelper {
             case 3:return "周三";
             case 4:return "周四";
             case 5:return "周五";
-            case 6:return "周六";
-            case 7:return "周日";
+            case 6:return "<font color=\"#ff00ff\">周六</font>";
+            case 7:return "<font color=\"#ff00ff\">周日</font>";
             default:return "未知";
         }
     }
